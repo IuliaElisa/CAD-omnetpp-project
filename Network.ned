@@ -35,7 +35,7 @@ sink: Sink {
 	gateSize = 3;
 //@display("p=120,200");
 }
-sources[nrHP + nrMP + nrLP]: Source {
+user[nrHP + nrMP + nrLP]: Source {
 //@display("p=40,120");
 }
 hpq: MyQ{
@@ -51,13 +51,13 @@ lpq: MyQ{
  
 connections: 
 for i = 0..nrHP - 1 {
-sources[i].txPackets --> hpq.rxPackets[i];
+user[i].txPackets --> hpq.rxPackets[i];
 }
 for i = 0..nrMP-1{
- sources[nrHP+i].txPackets --> mpq.rxPackets[i];   
+ user[nrHP+i].txPackets --> mpq.rxPackets[i];   
 }
 for i = 0 ..nrLP-1 {
-sources[nrHP+nrMP+i].txPackets --> lpq.rxPackets[i];
+user[nrHP+nrMP+i].txPackets --> lpq.rxPackets[i];
 }
 scheduler.txScheduling[0] --> hpq.rxScheduling;
 scheduler.txScheduling[1] --> mpq.rxScheduling;

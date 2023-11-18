@@ -13,19 +13,16 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include "Sink.h"
-
-Define_Module(Sink);
-
-void Sink::initialize()
+//
+// TODO auto-generated module
+//
+simple MyQ
 {
-   // lifetimeSignal = registerSignal("lifetime");
-}
-
-void Sink::handleMessage(cMessage *msg)
-{
-    simtime_t lifetime = simTime() - msg->getCreationTime();
-      EV << "Received " << msg->getName() << ", lifetime: " << lifetime << "s" << endl;
-    //  emit(lifetimeSignal, lifetime);
-      delete msg;
+    parameters:  
+        int qlp;
+        int NrInputs;
+      gates:
+        input rxScheduling;
+        input rxPackets[NrInputs];
+        output txPackets;
 }

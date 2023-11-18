@@ -13,23 +13,17 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#ifndef __SCHED_TST_SINK_H_
-#define __SCHED_TST_SINK_H_
-
-#include <omnetpp.h>
-
-using namespace omnetpp;
-
-/**
- * TODO - Generated class
- */
-class Sink : public cSimpleModule
+//
+// TODO auto-generated module
+//
+simple Sink
 {
-private:
-  //  simsignal_t lifetimeSignal;
-  protected:
-    virtual void initialize();
-    virtual void handleMessage(cMessage *msg);
-};
+ parameters:
+        int gateSize=default(3);
+       @display("i=block/sink");
+       @signal[lifetime](type="simtime_t");
+       @statistic[lifetime](title="lifetime of arrived jobs"; unit=s; record=vector,mean,max; interpolationmode=none);
+    gates:
+        input rxPackets[gateSize];
 
-#endif
+}

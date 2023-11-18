@@ -13,15 +13,23 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-//
-// TODO auto-generated module
-//
-simple MyQ
+#ifndef __SCHED_TST_SINK_H_
+#define __SCHED_TST_SINK_H_
+
+#include <omnetpp.h>
+
+using namespace omnetpp;
+
+/**
+ * TODO - Generated class
+ */
+class Sink : public cSimpleModule
 {
-    parameters:  
-        int NrInputs;
-      gates:
-        input rxScheduling;
-        input rxPackets[NrInputs];
-        output txPackets;
-}
+private:
+   simsignal_t lifetimeSignal;
+  protected:
+    virtual void initialize();
+    virtual void handleMessage(cMessage *msg);
+};
+
+#endif

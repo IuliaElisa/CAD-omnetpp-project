@@ -13,29 +13,19 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include "myQ.h"
+#include "Sink.h"
 
-Define_Module(MyQ);
+Define_Module(Sink);
 
-void MyQ::initialize()
+void Sink::initialize()
 {
-    queue.setName("queue");
+    lifetimeSignal = registerSignal("lifetime");
 }
 
-void MyQ::handleMessage(cMessage *msg)
+void Sink::handleMessage(cMessage *msg)
 {
-    //int i;
-    //int ql;
-    //ql = queue.getLength();
-    if (msg->arrivedOn("rxPackets")){
-        queue.insert(msg);
-    } else if (msg->arrivedOn("rxScheduling")){
-        //read parameters from msg
-        delete msg;
-        //empty the queue !
-        while(!queue.isEmpty()){
-          msg = (cMessage *)queue.pop();
-          send(msg, "txPackets");
-        }
-    }
+    simtime_t lifetime = simTime() - msg->getCreationTime();
+      EV << "Received " << msg->getName() << ", lifetime: " << lifetime << "s" << endl;
+      emit(lifetimeSignal, lifetime);
+      delete msg;
 }
