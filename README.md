@@ -1,6 +1,6 @@
 # CAD-omnetpp-project
 
-This project developed during the Computer Aided Design course in Omnetpp-5.6.2. This project aims to impleemnt a scheduling model for an IP packets scheduler placed on a DiffServ node.
+This project aims to implement a scheduling model for an IP packets scheduler placed on a DiffServ node in Omnetpp-5.6.2. 
 
-The requirements can be found here: http://staff.cs.upt.ro/~todinca/. 
+The requirements can be found here: http://staff.cs.upt.ro/~todinca/ at the Computer Aided Design course.
 
