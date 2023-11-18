@@ -32,11 +32,29 @@ Scheduler::~Scheduler()
 
 void Scheduler::initialize()
 {
-    NrQueues = par("gateSize").intValue();
-    NrOfChannels = 10;//read from omnetpp.ini
+    NrUsers = par("gateSize").intValue();
     selfMsg = new cMessage("selfMsg");
        scheduleAt(simTime(), selfMsg);
 }
+
+void Scheduler::handleMessage(cMessage *msg)
+{
+  //  int userWeights[NrUsers];
+    if (msg == selfMsg){
+        for(int i =0;i<NrUsers;i++){
+            cMessage *cmd = new cMessage("cmd");
+            //set parameter value, e.g., nr of blocks to be sent from the queue by user i
+            send(cmd,"txScheduling",i);
+        }
+        scheduleAt(simTime()+par("schedulingPeriod").doubleValue(), selfMsg);
+
+    }
+
+}
+
+/*
+Should be this: 
+
 
 void Scheduler::handleMessage(cMessage *msg)
 {
@@ -57,10 +75,8 @@ void Scheduler::handleMessage(cMessage *msg)
 
     }
 
-    /*
     q[0] = getParentModule()->getSubmodule("hpq")->par("qlp");
     q[1] = getParentModule()->getSubmodule("mpq")->par("qlp");
     q[2] = getParentModule()->getSubmodule("lpq")->par("qlp");
-    */
-
 }
+*/
