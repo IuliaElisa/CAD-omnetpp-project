@@ -29,9 +29,10 @@ public:
     Scheduler();
     ~Scheduler();
 private:
+    double* lastServedTime;
     cMessage *selfMsg;
     int NrUsers;
-   // int userWeights[3];
+    int* userWeights;
 
   protected:
     virtual void initialize();
@@ -39,3 +40,5 @@ private:
 };
 
 #endif
+
+

@@ -35,26 +35,51 @@ void Scheduler::initialize()
     NrUsers = par("gateSize").intValue();
     selfMsg = new cMessage("selfMsg");
        scheduleAt(simTime(), selfMsg);
+
+    lastServedTime = new double[NrUsers];
+    userWeights = new int[NrUsers];
+
+    for (int i = 0; i < NrUsers; i++) {
+        lastServedTime[i] = simTime().dbl();
+        userWeights[i] = i + 1; // For example
+    }
 }
 
 void Scheduler::handleMessage(cMessage *msg)
 {
-  //  int userWeights[NrUsers];
-    if (msg == selfMsg){
-        for(int i =0;i<NrUsers;i++){
-            cMessage *cmd = new cMessage("cmd");
-            //set parameter value, e.g., nr of blocks to be sent from the queue by user i
-            send(cmd,"txScheduling",i);
-        }
-        scheduleAt(simTime()+par("schedulingPeriod").doubleValue(), selfMsg);
+    int q[NrQueues];
+    int userWeights[NrQueues];
 
+    for(int j=0;j<NrQueues; j++){
+        q[j]= getParentModule()->getSubmodule("user",j)->getSubmodule("myqq")->par("qlp");
+        userWeights[j] = q[j]; // Set the weight of each user to the length of their queue
+        EV << "q["<<j<<"]= " << q[j] <<endl;
     }
 
+    if (msg == selfMsg){
+        int maxScoreUser = 0;
+        double maxScore = 0;
+
+        for(int i = 0; i < NrQueues; i++){
+            double elapsed = simTime().dbl() - lastServedTime[i];
+            double score = elapsed * userWeights[i];
+
+            if (score > maxScore) {
+                maxScore = score;
+                maxScoreUser = i;
+            }
+        }
+
+        cMessage *cmd = new cMessage("cmd");
+        send(cmd,"txScheduling",maxScoreUser);
+        lastServedTime[maxScoreUser] = simTime().dbl();
+
+        scheduleAt(simTime()+par("schedulingPeriod").doubleValue(), selfMsg);
+    }
 }
 
 /*
 Should be this: 
-
 
 void Scheduler::handleMessage(cMessage *msg)
 {
