@@ -35,8 +35,6 @@ The detailed requirements for the simulation model can be found on the [Computer
 
 ### More Advanced Requirements
 
-Choose and implement one of the following scheduling algorithms:
-
 - **Priority Queueing:**
   - Lower priority queues are served only if higher priority queues are empty.
 
@@ -44,6 +42,3 @@ Choose and implement one of the following scheduling algorithms:
   - An auction system determines the next user to be served.
   - Consider introducing weights to improve the algorithm, where users with higher weights are served more often.
 
-### Performance Comparison
-
-- Compare the performance (average delay of IP packets) of the implemented algorithms for different simulation scenarios.
